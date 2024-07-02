@@ -36,19 +36,24 @@ jobs:
         PASSWORD: ${{ secrets.PASSWORD }}
         WEBHOOK: ${{ secrets.WEBHOOK }}
     
-    - name: Check if dingscore.json is updated
-      id: checkjson
+    - name: Install jq
+      run: sudo apt-get install jq
+
+    - name: Read dingscore.json content
+      id: read_json
       run: |
-        git diff --exit-code dingscore.json || echo "changed=true" >> $GITHUB_OUTPUT
-    
-    - name: Push generated dingscore.json
+        dingscore_json_content=$(cat dingscore.json | jq -c .)
+        echo "::set-output name=dingscore_json_content::$dingscore_json_content"
+
+    - name: Compare and update dingscore1
       run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git checkout main
-        git add dingscore.json
-        git commit -m "Automatically update dingscore.json"
-        git push origin main
-      env:
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      if: steps.checkjson.outputs.changed
+        current_dingscore1="${{ vars.dingscore1 }}"
+        new_dingscore=$(jq -c . < dingscore.json)
+
+        if [ "$new_dingscore" != "$current_dingscore1" ]; then
+          echo "dingscore1 is different. Updating..."
+          echo $new_dingscore > new_dingscore.json
+          gh variable set dingscore1 --body "$new_dingscore"
+        else
+          echo "dingscore1 is the same. No update needed."
+        fi
