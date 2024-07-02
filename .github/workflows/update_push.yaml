@@ -57,3 +57,5 @@ jobs:
         else
           echo "dingscore1 is the same. No update needed."
         fi
+      env:
+        GH_TOKEN: ${{ github.token }}  # 设置 GH_TOKEN 环境变量
