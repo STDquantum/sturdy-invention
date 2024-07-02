@@ -31,7 +31,7 @@ jobs:
       run: |
         echo '${{ vars.dingscore1 }}' > dingscore.json
         echo "{\"username\": \"$USERNAME\", \"password\": \"$PASSWORD\", \"url\": \"$WEBHOOK\"}" > database.json
-        timeout 1m python ZJUScoreAssistant/zjuscore.py -dn || true
+        timeout 30s python ZJUScoreAssistant/zjuscore.py -dn || true
       env:
         USERNAME: ${{ secrets.USERNAME }}
         PASSWORD: ${{ secrets.PASSWORD }}
