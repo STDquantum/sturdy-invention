@@ -47,7 +47,7 @@ jobs:
 
         if [ '$new_dingscore' != '$current_dingscore1' ]; then
           echo "dingscore1 is different. Updating..."
-          gh variable set dingscore1 --body '$new_dingscore'
+          gh variable set dingscore1 --body '${{ new_dingscore }}'
         else
           echo "dingscore1 is the same. No update needed."
         fi
