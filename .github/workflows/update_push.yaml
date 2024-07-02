@@ -47,7 +47,7 @@ jobs:
 
     - name: Compare and update dingscore1
       run: |
-        current_dingscore1="${{ vars.dingscore1 }}"
+        current_dingscore1='${{ vars.dingscore1 }}'
         new_dingscore=$(jq -c . < dingscore.json)
 
         if [ "$new_dingscore" != "$current_dingscore1" ]; then
