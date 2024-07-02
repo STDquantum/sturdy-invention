@@ -2,7 +2,7 @@ name: Auto Push Updated Score Info
 
 on:
   schedule:
-    - cron: '0 0-23/1 * * *'
+    - cron: '*/5 * * * *'
   workflow_dispatch:
 
 jobs:
@@ -52,4 +52,4 @@ jobs:
           echo "dingscore1 is the same. No update needed."
         fi
       env:
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}  # 设置 GH_TOKEN 环境变量
+        GH_TOKEN: ${{ github.token }}
