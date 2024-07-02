@@ -45,7 +45,7 @@ jobs:
         current_dingscore1='${{ vars.dingscore1 }}'
         new_dingscore=$(jq -c . < dingscore.json)
 
-        if [ '$new_dingscore' != '$current_dingscore1' ]; then
+        if [ "$new_dingscore" != "$current_dingscore1" ]; then
           echo "dingscore1 is different. Updating..."
           gh variable set dingscore1 --body "$new_dingscore"
         else
