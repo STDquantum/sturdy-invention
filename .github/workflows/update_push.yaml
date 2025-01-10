@@ -2,7 +2,7 @@ name: Auto Push Updated Score Info
 
 on:
   schedule:
-    - cron: '*/840 * * * *'
+    - cron: '*/40 * * * *'
   workflow_dispatch:
 
 jobs:
