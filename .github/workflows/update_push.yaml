@@ -33,7 +33,7 @@ jobs:
         echo "{\"username\": \"$USERNAME\", \"password\": \"$PASSWORD\", \"url\": \"$WEBHOOK\"}" > database.json
         timeout 30s python ZJUScoreAssistant/zjuscore.py -dn || true
       env:
-        DINGSCORE1: ${{ secrets.dingscore1 }}
+        DINGSCORE1: ${{ secrets.DINGSCORE1 }}
         USERNAME: ${{ secrets.USERNAME }}
         PASSWORD: ${{ secrets.PASSWORD }}
         WEBHOOK: ${{ secrets.WEBHOOK }}
@@ -57,4 +57,4 @@ jobs:
         fi
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        DINGSCORE1: ${{ secrets.dingscore1 }}
+        DINGSCORE1: ${{ secrets.DINGSCORE1 }}
