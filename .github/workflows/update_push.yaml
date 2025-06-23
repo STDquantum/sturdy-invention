@@ -22,7 +22,7 @@ jobs:
         python-version: '3.10'
 
     - name: Get Score Assistant Repo
-      run: git clone https://github.com/PeiPei233/ZJUScoreAssistant.git
+      run: git clone https://github.com/STDquantum/ZJUScoreAssistant.git
 
     - name: Install Python Dependencies
       run: pip install -r ZJUScoreAssistant/requirements.txt
