@@ -33,7 +33,7 @@ jobs:
         echo "{\"username\": \"$USERNAME\", \"password\": \"$PASSWORD\", \"url\": \"$WEBHOOK\"}" > database.json
         timeout 30s python ZJUScoreAssistant/zjuscore.py -dn || true
       env:
-        DINGSCORE1: ${{ vars.dingscore1 }}
+        DINGSCORE1: ${{ secrets.dingscore1 }}
         USERNAME: ${{ secrets.USERNAME }}
         PASSWORD: ${{ secrets.PASSWORD }}
         WEBHOOK: ${{ secrets.WEBHOOK }}
@@ -51,10 +51,10 @@ jobs:
 
         if [ "$new_dingscore" != "$current_dingscore1" ]; then
           echo "dingscore1 is different. Updating..."
-          gh variable set dingscore1 --body "$new_dingscore"
+          gh secret set dingscore1 --body "$new_dingscore"
         else
           echo "dingscore1 is the same. No update needed."
         fi
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        DINGSCORE1: ${{ vars.dingscore1 }}
+        DINGSCORE1: ${{ secrets.dingscore1 }}
