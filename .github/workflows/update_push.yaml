@@ -29,11 +29,10 @@ jobs:
 
     - name: Run Python Script
       run: |
-        echo '$DINGSCORE1' > dingscore.json
+        echo '${{ vars.dingscore1 }}' > dingscore.json
         echo "{\"username\": \"$USERNAME\", \"password\": \"$PASSWORD\", \"url\": \"$WEBHOOK\"}" > database.json
         timeout 30s python ZJUScoreAssistant/zjuscore.py -dn || true
       env:
-        DINGSCORE1: ${{ secrets.DINGSCORE1 }}
         USERNAME: ${{ secrets.USERNAME }}
         PASSWORD: ${{ secrets.PASSWORD }}
         WEBHOOK: ${{ secrets.WEBHOOK }}
@@ -44,17 +43,16 @@ jobs:
     - name: Compare and update dingscore1
       run: |
         current_dingscore1=$(cat <<EOF
-        $DINGSCORE1
+        ${{ vars.dingscore1 }}
         EOF
         )
         new_dingscore=$(jq -c . < dingscore.json)
 
         if [ "$new_dingscore" != "$current_dingscore1" ]; then
           echo "dingscore1 is different. Updating..."
-          gh secret set dingscore1 --body "$new_dingscore"
+          gh variable set dingscore1 --body "$new_dingscore"
         else
           echo "dingscore1 is the same. No update needed."
         fi
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        DINGSCORE1: ${{ secrets.DINGSCORE1 }}
