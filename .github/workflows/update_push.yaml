@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
+      actions: write
       contents: write
 
     steps:
@@ -50,9 +51,8 @@ jobs:
 
         if [ "$new_dingscore" != "$current_dingscore1" ]; then
           echo "dingscore1 is different. Updating..."
-          gh variable set dingscore1 --body "$new_dingscore"
+          gh variable set dingscore1 --body "$new_dingscore" --repo ${{ github.repository }} --auth "${{ secrets.GITHUB_TOKEN }}"
         else
           echo "dingscore1 is the same. No update needed."
         fi
-      env:
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      
