@@ -55,4 +55,5 @@ jobs:
         else
           echo "dingscore1 is the same. No update needed."
         fi
-      
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
